@@ -13,6 +13,7 @@ import vacancyViewTemplate      from './views/vacancy.profile/vacancy.view.html'
 import candidateProfileTemplate from './views/candidate.profile/candidate.profile.html';
 import loaderTemplate           from './views/loading/loading.view.html';
 import loginTemplate            from './views/login/login.view.html';
+import calendarTemplate         from './views/calendar/calendar.html';
 
 import homeController             from './views/home/home.controller';
 import candidatesController       from './views/candidates/candidates.controller';
@@ -27,6 +28,7 @@ import rolesController            from './views/settings/roles/roles.controller'
 import vacancyViewController      from './views/vacancy.profile/vacancy.view.controller';
 import candidateProfileController from './views/candidate.profile/candidate.profile.controller';
 import loginController            from './views/login/login.controller';
+import calendarController         from './views/calendar/calendar.controller';
 
 import translationsEn from './translations/translations-en.json';
 import translationsRu from './translations/translations-ru.json';
@@ -59,6 +61,9 @@ export default function _config(
          url: '/candidates',
          template: candidatesTemplate,
          controller: candidatesController,
+         params: {
+            vacancyIdToGoBack: null
+         },
          data: {
             hide: false,
             hideHome: true
@@ -69,6 +74,9 @@ export default function _config(
          url: '/vacancies',
          template: vacanciesTemplate,
          controller: vacanciesController,
+         params: {
+            candidateIdToGoBack: null
+         },
          data: {
             hide: false,
             hideHome: true
@@ -80,6 +88,7 @@ export default function _config(
          template: vacancyViewTemplate,
          controller: vacancyViewController,
          params: {
+            candidatesIds: [],
             _data: null,
             vacancyId: null
          },
@@ -92,7 +101,8 @@ export default function _config(
          controller: candidateController,
          params: {
             _data: null,
-            candidateId: null
+            candidateId: null,
+            vacancyIdToGoBack: null
          },
          parent: 'candidates',
          data: { hide: true }
@@ -102,6 +112,7 @@ export default function _config(
          template: candidateProfileTemplate,
          controller: candidateProfileController,
          params: {
+            vacancies: [],
             _data: null,
             candidateId: null
          },
@@ -118,6 +129,13 @@ export default function _config(
          },
          parent: 'vacancies',
          data: { hide: true }
+      })
+      .state('calendar', {
+         url: '/calendar',
+         template: calendarTemplate,
+         controller: calendarController,
+         parent: 'home',
+         data: { hideHome: true }
       })
       .state('settings', {
          url: '/settings',
